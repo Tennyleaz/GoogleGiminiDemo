@@ -24,13 +24,18 @@
                      Margin="35,0,100,0" VerticalContentAlignment="Center"></TextBox>
             <Button HorizontalAlignment="Right" Width="90" Name="btnPickImage" Click="BtnPickImage_OnClick">Pick Image</Button>
         </Grid>
+        <Label Grid.Column="1" Grid.Row="0" VerticalAlignment="Bottom">Model:</Label>
+        <ComboBox Grid.Column="1" Grid.Row="0" Name="cbModel" Height="22" VerticalAlignment="Bottom" Margin="60,0,10,0"></ComboBox>
+
         <TextBlock Grid.Column="0" Grid.Row="1" Margin="10,5,0,0">User Propmt: (optional, what is this image about?)</TextBlock>
         <TextBox Grid.Column="0" Grid.Row="1" Name="tbUserPrompt" Margin="10,24,10,0" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"></TextBox>
         <TextBlock Grid.Column="0" Grid.Row="2" Margin="10,5,0,0">System Propmt:</TextBlock>
         <TextBox Grid.Column="0" Grid.Row="2" Name="tbSystemPrompt" Margin="10,24,10,0" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"></TextBox>
         <Button Grid.Column="0" Grid.Row="3" Height="24" Width="200" Margin="10" Name="btnGenerate" Click="BtnGenerate_OnClick" IsEnabled="False">Generate!</Button>
 
-        <Image Grid.Column="1" Grid.Row="1" Name="img"></Image>
+        <Border Grid.Column="1" Grid.Row="1" BorderBrush="Gray" BorderThickness="0.5" Margin="10,10,10,0">
+            <Image Name="img"></Image>
+        </Border>
         <TextBlock Grid.Column="1" Grid.Row="2" Margin="10,5,0,0">Result:</TextBlock>
         <TextBox Grid.Column="1" Grid.Row="2" Name="tbResult" Margin="10,24,10,0" AcceptsReturn="True" TextWrapping="Wrap" IsReadOnly="True" VerticalScrollBarVisibility="Auto"></TextBox>
         <ProgressBar Grid.Column="1" Grid.Row="3" Height="8" IsIndeterminate="True" Name="progress" Visibility="Collapsed" Margin="10,0"></ProgressBar>

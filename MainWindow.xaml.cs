@@ -24,10 +24,19 @@ namespace GoogleGiminiDemo;
 public partial class MainWindow : Window
 {
     private string apiKey;
-    private string model = "gemini-2.0-flash";
     private HttpClient httpClient;
     private const string STREAMING_CONTENT = "streamGenerateContent?alt=sse&";
-    private const string GENERATE_CONTENT = "generateContent?"; 
+    private const string GENERATE_CONTENT = "generateContent?";
+
+    private readonly string[] models =
+    [
+        "gemini-2.0-flash",
+        "gemini-2.0-flash-lite",
+        "gemini-2.5-flash-preview-04-17",
+        "gemini-2.5-pro-preview-05-06"
+    ];
+
+    private string SelectedModel => models[cbModel.SelectedIndex];
 
     public MainWindow()
     {
@@ -37,6 +46,9 @@ public partial class MainWindow : Window
                               "Set `image_type` and `image_content` fields as what you recognize what the image contains.\n" +
                               "If the image contains text, fill `text` field, in markdown format.\n" +
                               "Properly name the image, in the `title` field.\n";
+        // set models
+        cbModel.ItemsSource = models;
+        cbModel.SelectedIndex = 0;
     }
 
     private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
@@ -57,7 +69,7 @@ public partial class MainWindow : Window
 
     private async Task<string> Generation(string userPrompt, string systemPrompt, string imageFileName)
     {
-        string url = $"https://generativelanguage.googleapis.com/v1beta/models/{model}:{GENERATE_CONTENT}key={apiKey}";
+        string url = $"https://generativelanguage.googleapis.com/v1beta/models/{SelectedModel}:{GENERATE_CONTENT}key={apiKey}";
         GiminiPostData postData = new GiminiPostData
         {
             contents = new List<GiminiContent>
@@ -94,15 +106,15 @@ public partial class MainWindow : Window
         {
             FileInfo fileInfo = new FileInfo(imageFileName);
             string dataType;
-            if (fileInfo.Extension == ".png")
+            if (fileInfo.Extension.ToLower() == ".png")
             {
                 dataType = "image/png";
             }
-            else if (fileInfo.Extension == ".jpg" || fileInfo.Extension == ".jpeg")
+            else if (fileInfo.Extension.ToLower() == ".jpg" || fileInfo.Extension.ToLower() == ".jpeg")
             {
                 dataType = "image/jpeg";
             }
-            else if (fileInfo.Extension == ".bmp")
+            else if (fileInfo.Extension.ToLower() == ".bmp")
             {
                 dataType = "image/bmp";
             }
